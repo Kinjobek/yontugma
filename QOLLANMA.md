@@ -38,7 +38,8 @@ eski YonTugma'ni «–» bilan olib taşlang va ruxsatni qaytadan bering.
 | Menyu bandi | Nima qiladi |
 |---|---|
 | **Yoqilgan** | Hammasini bir bosişda yoqadi yoki öçiradi |
-| **Barça ilovalar uçun → 4-tugma / 5-tugma / Ğildirak** | Tugmaga amal tanlaysiz: Orqaga, Oldinga, Mission Control, iş stollari orasida ötiş, tablar, nusxa oliş/qöyiş va boşqalar |
+| **Barça ilovalar uçun → 4-tugma / 5-tugma / Ğildirak** | Tugmaga amal tanlaysiz: Orqaga, Oldinga, ovozni balandlatiş / pasaytiriş / öçiriş, Mission Control, iş stollari orasida ötiş, tablar, nusxa oliş/qöyiş va boşqalar |
+| **Tayyor toplamlar** | Bir bosişda: «4 / 5 = Orqaga / Oldinga» yoki «4 / 5 = Ovoz pasaytiriş / balandlatiş» |
 | **Faqat «…» uçun** | Hozir oçiq turgan ilova uçun alohida sozlama (masalan, Chrome'da 4-tugma = tabni yopiş) |
 | **Boşqa tugmalar birikmasi…** | Istalgan klaviatura birikmasini bosib, tugmaga biriktirasiz |
 | **Alohida sozlangan ilovalar** | Ilovaga xos sozlamani öçiriş |

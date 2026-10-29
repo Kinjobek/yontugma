@@ -12,6 +12,7 @@ Xohlasangiz, tugmalarga boşqa amallarni ham berasiz.
 ## Imkoniyatlar
 
 - 4-tugma → Orqaga (⌘[), 5-tugma → Oldinga (⌘]) — odatiy sozlama
+- Ovozni balandlatiş / pasaytiriş / öçiriş (🔊 🔉 🔇) — «Tayyor toplamlar» dan bir bosişda: 4 = ovoz pasaytiriş, 5 = ovoz balandlatiş
 - Har bir tugmaga boşqa amal: Mission Control, iş stollari orasida ötiş, tablar, nusxa oliş/qöyiş va boşqalar
 - Istalgan klaviatura birikmasini yozib olib, tugmaga biriktiriş
 - Har bir ilova uçun alohida sozlama

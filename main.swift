@@ -19,6 +19,9 @@ let presets: [Preset] = [
     Preset(id: "block", title: "Heç narsa qilmaslik (öçiriş)"),
     Preset(id: "back", title: "Orqaga  (⌘[)"),
     Preset(id: "forward", title: "Oldinga  (⌘])"),
+    Preset(id: "volumeUp", title: "Ovozni balandlatiş  (🔊)"),
+    Preset(id: "volumeDown", title: "Ovozni pasaytiriş  (🔉)"),
+    Preset(id: "mute", title: "Ovozni öçiriş / yoqiş  (🔇)"),
     Preset(id: "mission", title: "Mission Control"),
     Preset(id: "appexpose", title: "Ilova oynalari  (⌃↓)"),
     Preset(id: "desktop", title: "Iş stolini körsatiş"),
@@ -74,10 +77,26 @@ func postKey(_ code: CGKeyCode, _ flags: CGEventFlags) {
 
 let arrowFlags: CGEventFlags = [.maskControl, .maskSecondaryFn, .maskNumericPad]
 
+// Klaviaturadagi ovoz tugmalari (F10/F11/F12) bilan bir xil: macOS ovoz belgisini ham ko'rsatadi.
+// NX_KEYTYPE_SOUND_UP = 0, NX_KEYTYPE_SOUND_DOWN = 1, NX_KEYTYPE_MUTE = 7
+func postMediaKey(_ key: Int) {
+    for down in [true, false] {
+        let flags = NSEvent.ModifierFlags(rawValue: down ? 0xa00 : 0xb00)
+        let data1 = (key << 16) | ((down ? 0xa : 0xb) << 8)
+        let e = NSEvent.otherEvent(with: .systemDefined, location: .zero, modifierFlags: flags,
+                                   timestamp: 0, windowNumber: 0, context: nil,
+                                   subtype: 8, data1: data1, data2: -1)
+        e?.cgEvent?.post(tap: .cghidEventTap)
+    }
+}
+
 func perform(_ id: String) {
     switch id {
     case "back": postKey(33, .maskCommand)              // [
     case "forward": postKey(30, .maskCommand)           // ]
+    case "volumeUp": postMediaKey(0)
+    case "volumeDown": postMediaKey(1)
+    case "mute": postMediaKey(7)
     case "mission":
         NSWorkspace.shared.open(URL(fileURLWithPath: "/System/Applications/Mission Control.app"))
     case "appexpose": postKey(125, arrowFlags)          // ⌃↓
@@ -518,6 +537,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
             item.submenu = actionsMenu(button: b.num, bundleID: nil, current: cur)
             menu.addItem(item)
         }
+        let quick = NSMenuItem(title: "Tayyor toplamlar", action: nil, keyEquivalent: "")
+        let qm = NSMenu()
+        for (title, b4, b5) in [("4 / 5 = Orqaga / Oldinga", "back", "forward"),
+                                ("4 / 5 = Ovoz pasaytiriş / balandlatiş", "volumeDown", "volumeUp")] {
+            let it = NSMenuItem(title: title, action: #selector(applyQuick(_:)), keyEquivalent: "")
+            it.target = self
+            it.representedObject = [b4, b5]
+            it.state = (st.global["4"] == b4 && st.global["5"] == b5) ? .on : .off
+            qm.addItem(it)
+        }
+        quick.submenu = qm
+        menu.addItem(quick)
 
         menu.addItem(.separator())
         if let app = lastApp, let bid = app.bundleIdentifier {
@@ -653,6 +684,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
     @objc func askPermission() {
         showPermissionHelp()
         waitForPermission()
+    }
+
+    @objc func applyQuick(_ sender: NSMenuItem) {
+        guard let pair = sender.representedObject as? [String], pair.count == 2 else { return }
+        Store.shared.s.global["4"] = pair[0]
+        Store.shared.s.global["5"] = pair[1]
     }
 
     @objc func resetAll() {
