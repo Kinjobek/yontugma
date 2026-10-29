@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YonTugma — Mac uçun siçqonça yon tugmalari</title>
+<meta name="description" content="YonTugma — Mac'da siçqonçaning yon tugmalarini işlatadigan bepul, oçiq kodli menyu-bar ilovasi: Orqaga/Oldinga, Mission Control, har ilova uçun alohida sozlama.">
+<meta name="author" content="Sarvarbek Nazarov — ALHARITM">
+<link rel="canonical" href="https://alharitm.com/yontugma/">
+<meta property="og:title" content="YonTugma — Mac uçun siçqonça yon tugmalari">
+<meta property="og:description" content="Siçqonçaning yon tugmalari Mac'da ham Orqaga/Oldinga işlasin. Bepul va oçiq kodli.">
+<meta property="og:url" content="https://alharitm.com/yontugma/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a2540">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='6' y='2' width='12' height='20' rx='6' fill='%2305a090'/%3E%3Cpath d='M12 2v7' stroke='white' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #05a090; --teal-ink: #047a6e; --navy: #0a2540;
+  --bg: #f6f8fa; --card: #ffffff; --ink: #0d1b2a; --muted: #53637a; --line: #e2e7ee;
+  --soft: #e8f6f4; --code: #eef2f6; --shadow: 0 1px 2px rgba(10,37,64,.06), 0 8px 24px rgba(10,37,64,.07);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1622; --card: #111f2e; --ink: #e8eef5; --muted: #9aabbf; --line: #1f3246;
+    --soft: #0f2d2f; --code: #172a3c; --teal-ink: #3fd0bf; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.65 "Plus Jakarta Sans", system-ui, -apple-system, sans-serif; }
+a { color: var(--teal-ink); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+code, kbd { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .88em; background: var(--code); padding: .1em .4em; border-radius: 6px; }
+kbd { border: 1px solid var(--line); border-bottom-width: 2px; }
+
+/* top bar */
+.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 16px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--ink); text-decoration: none; font-size: 18px; }
+.logo svg { width: 26px; height: 26px; }
+.top nav { display: flex; gap: 20px; font-size: 14px; font-weight: 600; }
+.top nav a { color: var(--muted); text-decoration: none; }
+.top nav a:hover { color: var(--ink); }
+@media (max-width: 720px) { .top nav a:not(.gh) { display: none; } }
+
+/* hero */
+.hero { padding: 72px 0 56px; }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+@media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } .hero { padding-top: 48px; } }
+.pill { display: inline-block; background: var(--soft); color: var(--teal-ink); font-weight: 700; font-size: 13px; padding: 5px 12px; border-radius: 99px; }
+h1 { font-size: clamp(34px, 5vw, 52px); line-height: 1.1; margin: 16px 0; letter-spacing: -.02em; }
+h1 span { color: var(--teal); }
+.lead { font-size: 18px; color: var(--muted); max-width: 560px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 12px; font-weight: 700; text-decoration: none; border: 1px solid transparent; }
+.btn svg { width: 18px; height: 18px; }
+.btn-main { background: var(--teal); color: #fff; }
+.btn-main:hover { background: #048d7f; }
+.btn-ghost { border-color: var(--line); color: var(--ink); background: var(--card); }
+.btn-ghost:hover { border-color: var(--teal); }
+.small { font-size: 13px; color: var(--muted); }
+
+/* menu mockup */
+.mock { background: var(--card); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+.mock-bar { display: flex; justify-content: flex-end; gap: 14px; align-items: center; padding: 8px 14px; background: var(--code); font-size: 13px; color: var(--muted); }
+.mock-bar .mouse { color: var(--teal); }
+.mock-menu { padding: 8px; font-size: 14px; }
+.mock-menu div { padding: 6px 12px; border-radius: 7px; display: flex; justify-content: space-between; gap: 10px; }
+.mock-menu .h { color: var(--muted); font-size: 12px; font-weight: 600; padding-top: 10px; }
+.mock-menu .on::before { content: "✓"; color: var(--teal); margin-right: 8px; font-weight: 800; }
+.mock-menu .sel { background: var(--teal); color: #fff; }
+.mock-menu .sel span { color: #fff; }
+.mock-menu span { color: var(--muted); }
+.mock-menu hr { border: 0; border-top: 1px solid var(--line); margin: 6px 4px; }
+
+/* sections */
+section { padding: 56px 0; }
+h2 { font-size: clamp(26px, 3.4vw, 34px); margin: 0 0 10px; letter-spacing: -.01em; }
+.sub { color: var(--muted); margin: 0 0 32px; max-width: 680px; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 860px) { .grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+.card h3 { margin: 12px 0 6px; font-size: 17px; }
+.card p { margin: 0; color: var(--muted); font-size: 15px; }
+.ic { width: 42px; height: 42px; border-radius: 11px; background: var(--soft); color: var(--teal-ink); display: grid; place-items: center; }
+.ic svg { width: 22px; height: 22px; }
+
+.steps { counter-reset: s; display: grid; gap: 14px; }
+.step { counter-increment: s; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px 20px 74px; position: relative; }
+.step::before { content: counter(s); position: absolute; left: 22px; top: 20px; width: 34px; height: 34px; border-radius: 50%; background: var(--teal); color: #fff; font-weight: 800; display: grid; place-items: center; }
+.step h3 { margin: 4px 0 6px; font-size: 17px; }
+.step p, .step li { color: var(--muted); font-size: 15px; margin: 0; }
+.step ol, .step ul { margin: 6px 0 0; padding-left: 20px; }
+.note { background: var(--soft); border-left: 4px solid var(--teal); border-radius: 10px; padding: 14px 18px; margin-top: 18px; font-size: 15px; }
+
+table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; font-size: 15px; }
+th, td { text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--code); font-size: 13px; color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 600; width: 38%; }
+@media (max-width: 560px) { td:first-child { width: auto; } th, td { padding: 10px 12px; } }
+
+details { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; margin-bottom: 10px; }
+summary { font-weight: 700; cursor: pointer; }
+details p, details li { color: var(--muted); font-size: 15px; }
+
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="2" width="12" height="20" rx="6" fill="#05a090"/><path d="M12 2v7" stroke="#fff" stroke-width="1.6"/><rect x="4.2" y="10" width="2.2" height="4" rx="1" fill="#0a2540"/></svg>YonTugma</a>
+    <nav>
+      <a href="#imkoniyatlar">Imkoniyatlar</a>
+      <a href="#ornatish">Örnatiş</a>
+      <a href="#foydalanish">Foydalaniş</a>
+      <a href="#savollar">Savollar</a>
+      <a class="gh" href="https://github.com/Kinjobek/yontugma">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="pill">macOS 13 va undan yangi · Bepul · Oçiq kod</span>
+      <h1>Siçqonçaning <span>yon tugmalari</span> Mac'da ham işlasin</h1>
+      <p class="lead">YonTugma — menyu satrida turadigan kiçik ilova. Siçqonçaning yon tugmalari Safari, Chrome, Finder va boşqa ilovalarda <b>Orqaga</b> va <b>Oldinga</b> vazifasini bajaradi. Xohlasangiz, ularga boşqa amallarni ham berasiz.</p>
+      <div class="cta">
+        <a class="btn btn-main" href="https://github.com/Kinjobek/yontugma/releases/latest/download/YonTugma.zip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg>Yuklab oliş</a>
+        <a class="btn btn-ghost" href="https://github.com/Kinjobek/yontugma"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.4 1.1 2.9.8.1-.6.4-1.1.7-1.3-2.2-.3-4.6-1.1-4.6-5a3.9 3.9 0 0 1 1-2.7c-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1 2.7c0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>Manba kodi</a>
+      </div>
+      <p class="small">Apple Silicon (M1–M4) va Intel Mac'lar uçun · hajmi ~170 KB · internetga ulanmaydi</p>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-bar"><span>🔋</span><span>Wi-Fi</span><span class="mouse">🖱</span><span>12:30</span></div>
+      <div class="mock-menu">
+        <div class="on">Yoqilgan</div>
+        <hr>
+        <div class="h">Barça ilovalar uçun</div>
+        <div class="sel">4-tugma (yon) <span>Orqaga</span></div>
+        <div>5-tugma (yon) <span>Oldinga</span></div>
+        <div>Ğildirakni bosiş <span>Özgartirmaslik</span></div>
+        <hr>
+        <div class="h">Faqat «Safari» uçun</div>
+        <div>4-tugma (yon) <span>umumiy sozlama</span></div>
+        <hr>
+        <div>Tugmalarni sinaş…</div>
+        <div class="on">Kompyuter yonganda işga tuşiriş</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="imkoniyatlar">
+  <div class="wrap">
+    <h2>Imkoniyatlar</h2>
+    <p class="sub">macOS boşqa işlab çiqaruvçilarning siçqonçalaridagi yon tugmalarni özi sozlay olmaydi. Odatda bu tugmalar faqat Chrome'da işlaydi, Safari va Finder'da esa işlamaydi. YonTugma şu böşliqni töldiradi.</p>
+    <div class="grid">
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></div><h3>Orqaga va Oldinga</h3><p>4-tugma — Orqaga (⌘[), 5-tugma — Oldinga (⌘]). Brauzerlarda, Finder'da va boşqa köp ilovalarda işlaydi.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg></div><h3>Har ilova uçun alohida</h3><p>Masalan, Chrome'da yon tugma tabni yopsin, Finder'da esa Orqaga qaytsin.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg></div><h3>Istalgan tugmalar birikmasi</h3><p>Mission Control, iş stollari orasida ötiş, nusxa oliş/qöyiş yoki özingiz bosgan istalgan birikma.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></div><h3>“Yaşirin” tugmalarni ham taniydi</h3><p>Baʼzi siçqonçalar (masalan, Xiaomi Mi Silent Mouse) yon tugmalarni macOS körmaydigan tarzda yuboradi. YonTugma ularni töğridan-töğri öqiydi.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6z"/></svg></div><h3>Xavfsiz va oçiq</h3><p>Internetga ulanmaydi, heç qanday maʼlumot yubormaydi. Butun kod bitta faylda, uni har kim tekşira oladi.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 3 4 14h7l-1 7 9-11h-7z"/></svg></div><h3>Yengil</h3><p>Faqat Apple kutubxonalari bilan yozilgan. Kompyuterni sekinlaştirmaydi, bir bosişda yoqiladi yoki öçiriladi.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="ornatish">
+  <div class="wrap">
+    <h2>Örnatiş</h2>
+    <p class="sub">Bor-yöği bir neça daqiqa. Ruxsatlarni faqat bir marta berasiz.</p>
+    <div class="steps">
+      <div class="step"><h3>Yuklab oling va Programmalar papkasiga torting</h3><p><a href="https://github.com/Kinjobek/yontugma/releases/latest/download/YonTugma.zip">YonTugma.zip</a> faylini yuklab oling va oçib, <b>YonTugma</b> ilovasini <b>Programmalar</b> (Applications) papkasiga torting.</p></div>
+      <div class="step"><h3>Birinçi marta oçing</h3><p>YonTugma'ni ikki marta bosing. Ilova App Store'dan emas, şuning uçun macOS uni töxtatib qöyişi mumkin. Bunday holda:</p>
+        <ol><li><b>Tizim sozlamalari → Maxfiylik va xavfsizlik</b> bölimini oçing.</li><li>Pastda «YonTugma bloklandi» yozuvi yonidagi <b>«Baribir oçiş»</b> (Open Anyway) tugmasini bosing.</li></ol></div>
+      <div class="step"><h3>Ikkita ruxsat bering</h3><p>Siçqonça tugmalarini uşlaş uçun macOS ikkita ruxsat talab qiladi. Ularni faqat siz bera olasiz:</p>
+        <ul><li><b>Universal kiriş</b> (Accessibility) — tugma bosilişini Orqaga/Oldinga buyruğiga aylantiriş uçun.</li><li><b>Kiritişni kuzatiş</b> (Input Monitoring) — “yaşirin” yon tugmalarni öqiş uçun.</li></ul>
+        <p style="margin-top:8px">Ikkalasi ham <b>Tizim sozlamalari → Maxfiylik va xavfsizlik</b> bölimida. Röyxatdan YonTugma'ni topib, kalitni yoqing. Menyuda ⚠️ yozuvlari qolmasa, hammasi joyida.</p></div>
+      <div class="step"><h3>Ilovani qayta oçing</h3><p>🖱 belgisi → <b>«YonTugma'dan çiqiş»</b>, keyin Programmalar papkasidan qayta oçing. «Kiritişni kuzatiş» ruxsati faqat şundan keyin kuçga kiradi.</p></div>
+    </div>
+    <div class="note">💡 <b>«Kompyuter yonganda işga tuşiriş»</b> bandini yoqib qöying — şunda YonTugma har safar özi oçiladi.</div>
+  </div>
+</section>
+
+<section id="foydalanish">
+  <div class="wrap">
+    <h2>Foydalaniş</h2>
+    <p class="sub">Hamma sozlamalar menyu satridagi 🖱 belgisida turadi.</p>
+    <table>
+      <thead><tr><th>Menyu bandi</th><th>Nima qiladi</th></tr></thead>
+      <tbody>
+        <tr><td>Yoqilgan</td><td>Hammasini bir bosişda yoqadi yoki öçiradi.</td></tr>
+        <tr><td>Barça ilovalar uçun → 4-tugma / 5-tugma / Ğildirak</td><td>Har bir tugmaga amal tanlaysiz: Orqaga, Oldinga, Mission Control, iş stollari, tablar, nusxa oliş/qöyiş va boşqalar.</td></tr>
+        <tr><td>Faqat «…» uçun</td><td>Hozir oçiq turgan ilova uçun alohida sozlama.</td></tr>
+        <tr><td>Boşqa tugmalar birikmasi…</td><td>Klaviaturada istalgan birikmani bosasiz va u tugmaga biriktiriladi (masalan <kbd>⌘</kbd><kbd>⇧</kbd><kbd>T</kbd>).</td></tr>
+        <tr><td>Alohida sozlangan ilovalar</td><td>Ilovaga xos sozlamani öçiriş.</td></tr>
+        <tr><td>Tugmalarni sinaş…</td><td>Siçqonça qaysi tugma raqamini yuborayotganini körsatadi.</td></tr>
+        <tr><td>Kompyuter yonganda işga tuşiriş</td><td>Mac yoqilganda YonTugma özi oçiladi.</td></tr>
+        <tr><td>Standart sozlamalarga qaytariş</td><td>4 = Orqaga, 5 = Oldinga holatiga qaytaradi.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="savollar">
+  <div class="wrap">
+    <h2>Savollar va muammolar</h2>
+    <p class="sub">Eng köp uçraydigan holatlar.</p>
+    <details><summary>Yon tugmalar işlamay qoldi</summary>
+      <p>Köpinça sabab ruxsatlarda böladi, ayniqsa ilova yangilangandan keyin. Quyidagilarni bajaring:</p>
+      <ol><li><b>Universal kiriş</b> va <b>Kiritişni kuzatiş</b> röyxatlarida YonTugma'ni tanlab, <b>«–»</b> bilan öçiring.</li><li><b>«+»</b> bilan Programmalar papkasidagi YonTugma'ni qayta qöşing va kalitni yoqing.</li><li>YonTugma'dan çiqib, uni qayta oçing.</li></ol></details>
+    <details><summary>Siçqonçamda yon tugmalar bormi — qanday bilaman?</summary>
+      <p>🖱 → <b>«Tugmalarni sinaş…»</b> oynasini oçing va yon tugmalarni bosing. «4» yoki «5» çiqsa, tugmalar işlaydi. Heç narsa çiqmasa, avval ikkala ruxsat berilganini tekşiring va ilovani qayta oçing.</p></details>
+    <details><summary>«Iş stoliga ötiş» amali işlamayapti</summary>
+      <p>Bu amal macOS'ning standart <kbd>⌃</kbd><kbd>←</kbd> / <kbd>⌃</kbd><kbd>→</kbd> tugmalariga tayanadi. Ular <b>Tizim sozlamalari → Klaviatura → Klaviatura qisqa tugmalari → Mission Control</b> bölimida yoqilgan bölişi kerak.</p></details>
+    <details><summary>YonTugma'ni qanday öçirib taşlayman?</summary>
+      <ol><li>🖱 → <b>YonTugma'dan çiqiş</b>.</li><li>Tizim sozlamalari → Umumiy → <b>Login elementlari</b> bölimidan YonTugma'ni olib taşlang.</li><li><b>Universal kiriş</b> va <b>Kiritişni kuzatiş</b> röyxatlaridan YonTugma'ni «–» bilan öçiring.</li><li>Programmalar papkasidagi YonTugma'ni Savatga taşlang.</li></ol></details>
+    <details><summary>Bu xavfsizmi?</summary>
+      <p>Ha. YonTugma internetga umuman ulanmaydi, heç qanday maʼlumot saqlamaydi va yubormaydi. U faqat siçqonça tugmalarini kuzatadi. Butun kod <a href="https://github.com/Kinjobek/yontugma/blob/main/main.swift">bitta faylda</a> oçiq turibdi.</p></details>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Sarvarbek Nazarov · <a href="https://alharitm.com/">ALHARITM</a></span>
+    <span>MIT litsenziyasi · <a href="https://github.com/Kinjobek/yontugma">GitHub</a></span>
+  </div>
+</footer>
+</body>
+</html>
